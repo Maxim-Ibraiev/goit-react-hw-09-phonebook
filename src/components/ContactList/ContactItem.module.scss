@@ -1,0 +1,19 @@
+@import '../../styles/components/variables';
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 10px;
+  padding: 10px;
+
+  // border: 1px solid #000;
+  // border-radius: 5px;
+
+  box-shadow: $boxShadow;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

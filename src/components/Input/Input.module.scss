@@ -1,0 +1,36 @@
+@import '../../styles/components/variables';
+@import '../../styles/components/animation';
+
+.container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  position: absolute;
+
+  transform: translate(20px, 0.5rem);
+
+  color: $placeholder;
+}
+
+.input {
+  padding-left: 15px;
+  height: 35px;
+
+  &:focus {
+    outline: none;
+    border: 3px solid $accent;
+  }
+
+  &:placeholder-shown ~ .label {
+    animation: placeholderReverse 250ms ease forwards;
+  }
+
+  &:not(:placeholder-shown) ~ .label,
+  &:focus ~ .label {
+    animation: placeholder 500ms ease forwards;
+  }
+}

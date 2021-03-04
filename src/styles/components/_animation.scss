@@ -1,0 +1,25 @@
+@keyframes placeholder {
+  0% {
+    transform: translate(20px, 0.5rem);
+  }
+  50% {
+    transform: translate(20px, -1.2rem);
+  }
+  100% {
+    transform: translate(0, -1.2rem);
+    color: black;
+  }
+}
+
+@keyframes placeholderReverse {
+  0% {
+    transform: translate(0, -1.2rem);
+    color: black;
+  }
+  50% {
+    transform: translate(20px, -1.2rem);
+  }
+  100% {
+    transform: translate(20px, 0.5rem);
+  }
+}

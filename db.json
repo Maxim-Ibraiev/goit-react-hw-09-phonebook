@@ -1,0 +1,19 @@
+{
+  "contacts": [
+    {
+      "id": "82819f6b-9f4c-4e65-b6bc-10e447dab8b2",
+      "name": "Максим",
+      "number": "10-003-25"
+    },
+    {
+      "id": "8c95f4c1-1d6e-4692-b4c6-b100a6942503",
+      "name": "tea",
+      "number": "dsfds"
+    },
+    {
+      "id": "900b5e1b-b1b4-44b3-8bba-74e0f88af7eb",
+      "name": "teae",
+      "number": ""
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+.form {
+  max-width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  & > :not(:last-child) {
+    margin-bottom: 30px;
+  }
+}

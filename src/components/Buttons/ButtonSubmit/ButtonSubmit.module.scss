@@ -1,0 +1,19 @@
+@import '../../../styles/components/variables';
+
+.button {
+  height: 40px;
+
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  background: $accent;
+  color: #ffffff;
+
+  transition: background $animation $cubic;
+
+  &:focus,
+  &:hover {
+    background: $accentFocus;
+    transition: background $animation $cubic;
+  }
+}

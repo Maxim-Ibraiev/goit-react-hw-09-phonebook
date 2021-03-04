@@ -1,0 +1,22 @@
+@import '../../styles/components/variables';
+
+.enter {
+  transform: scale(0.3);
+}
+.enterActive {
+  scale: 1;
+  transform: scale(1);
+
+  transition: all $animation linear;
+}
+
+.exit {
+  scale: 1;
+  transform: scale(1);
+}
+.exitActive {
+  scale: 0.1;
+  transform: scale(0.3);
+
+  transition: all $animation linear;
+}

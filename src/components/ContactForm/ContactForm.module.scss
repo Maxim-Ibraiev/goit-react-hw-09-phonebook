@@ -1,0 +1,15 @@
+@import '../../styles/components/variables';
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  padding: 15px;
+  padding-top: 30px;
+
+  box-shadow: $boxShadow;
+
+  & > *:not(:last-child) {
+    margin-bottom: 30px;
+  }
+}

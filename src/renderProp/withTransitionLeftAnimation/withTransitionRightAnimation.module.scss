@@ -1,0 +1,29 @@
+@import '../../styles/components/variables';
+
+.appear {
+  transform: translateX(100%);
+}
+
+.appearActive {
+  transform: translateX(0);
+
+  transition: transform $animation $cubic;
+}
+
+.enter {
+  transform: translateX(100%);
+}
+.enterActive {
+  transform: translateX(0);
+
+  transition: transform $animation $cubic;
+}
+
+.exit {
+  transform: translateX(0);
+}
+.exitActive {
+  transform: translateX(100%);
+
+  transition: transform $animation $cubic;
+}

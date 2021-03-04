@@ -1,0 +1,32 @@
+@import '../../styles/components/variables';
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: large;
+  & a {
+    padding: 5px;
+
+    text-decoration: none;
+    color: $accent;
+  }
+  & a:hover,
+  a:focus {
+    color: $accentFocus;
+  }
+}
+
+.list {
+  display: flex;
+
+  li:not(:last-child) {
+    margin-right: 30px;
+  }
+}
+
+.active {
+  border-bottom: $accent solid 4px;
+}
