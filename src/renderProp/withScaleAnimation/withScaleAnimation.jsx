@@ -10,7 +10,7 @@ const withScaleAnimation = WrappedComponent => props => {
       classNames={fade}
       unmountOnExit
     >
-      <WrappedComponent {...props}></WrappedComponent>
+      <WrappedComponent {...props} />
     </CSSTransition>
   );
 };

@@ -15,17 +15,8 @@ import {
 } from './userActions';
 
 export const userToken = {
-  setToken: token => {
-    axios.defaults.headers.Authorization = token;
-    console.log(token);
-    console.log('axios', axios.defaults.headers.Authorization);
-    return token;
-  },
-  unsetToken: () => {
-    axios.defaults.headers.Authorization = '';
-
-    return '';
-  },
+  setToken: token => (axios.defaults.headers.Authorization = token),
+  unsetToken: () => (axios.defaults.headers.Authorization = ''),
 };
 
 export const singUp = user => dispatch => {
