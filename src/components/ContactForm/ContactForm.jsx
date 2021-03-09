@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuIdv4 } from 'uuid';
 import { connect } from 'react-redux';
@@ -15,66 +15,59 @@ const INITIAL_STATE = {
   isShowNotification: false,
 };
 
-class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-    isShowNotification: false,
+function ContactForm({ contacts, onSetContacts }) {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [isShowNotification, setIsShowNotification] = useState(false);
+
+  const reset = () => {
+    setName(INITIAL_STATE.name);
+    setNumber(INITIAL_STATE.number);
+    setIsShowNotification(INITIAL_STATE.isShowNotification);
   };
 
-  static propTypes = {
-    onSetContacts: PropTypes.func,
-  };
-
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    const { name, number } = this.state;
-    const { contacts } = this.props;
-
     if (!name || contacts.find(contact => contact.name === name)) {
-      this.setState({ isShowNotification: true });
+      setIsShowNotification(true);
 
       return setTimeout(() => {
-        this.setState({ isShowNotification: false });
+        setIsShowNotification(false);
       }, 2000);
     }
 
-    this.props.onSetContacts({ id: uuIdv4(), name, number });
-    this.reset();
+    onSetContacts({ id: uuIdv4(), name, number });
+    reset();
   };
 
-  reset = () => {
-    this.setState({ ...this.state, ...INITIAL_STATE });
-  };
-
-  render() {
-    const { name, number, isShowNotification } = this.state;
-    const notificationText = name
+  const notificationText =
+    name && number
       ? `${name} is already in contacts.`
-      : 'Please enter the contact name.';
+      : 'Please enter the contact.';
 
-    return (
-      <form onSubmit={this.handleSubmit} className={s.container}>
-        <Notification
-          in={isShowNotification}
-          text={notificationText}
-          rightTransition={true}
-        />
+  return (
+    <form onSubmit={handleSubmit} className={s.container}>
+      <Notification
+        in={isShowNotification}
+        text={notificationText}
+        rightTransition={true}
+      />
 
-        <Input label={'Name'} value={name} onChange={this.handleChange} />
-        <Input label={'Number'} value={number} onChange={this.handleChange} />
+      <Input
+        label={'Name'}
+        value={name}
+        onChange={({ target }) => setName(target.value)}
+      />
+      <Input
+        label={'Number'}
+        value={number}
+        onChange={({ target }) => setNumber(target.value)}
+      />
 
-        <ButtonSubmit text={'Add contact'} />
-      </form>
-    );
-  }
+      <ButtonSubmit text={'Add contact'} />
+    </form>
+  );
 }
 
 const mapStateToProps = state => ({
@@ -86,3 +79,7 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+
+ContactForm.propTypes = {
+  onSetContacts: PropTypes.func,
+};

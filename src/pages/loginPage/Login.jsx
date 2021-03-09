@@ -35,14 +35,6 @@ class Login extends Component {
 
     return (
       <form onSubmit={this.handleSubmit} className={s.form}>
-        {/* <label>
-          Email
-          <input onChange={this.handleChange} type="email" name="email" />
-        </label>
-        <label>
-          Password
-          <input onChange={this.handleChange} type="password" name="password" />
-        </label> */}
         <Input
           label={'Email'}
           value={email}
@@ -53,11 +45,10 @@ class Login extends Component {
           label={'Password'}
           value={password}
           onChange={this.handleChange}
-          type="password"
+          type="current-password"
         />
 
         <Button type="submit" text={'Войти'}></Button>
-        {/* <button type="submit">Войти</button> */}
       </form>
     );
   }

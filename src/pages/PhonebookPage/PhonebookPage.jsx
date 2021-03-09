@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/contacts/contactsOperations';
 import * as userActions from '../../redux/user/userOperations';
-import { getLoading } from '../../redux/contacts/contacts-selectors';
 import { getFilter, getItems } from '../../redux/contacts/contacts-selectors';
 import { getIsAuthorized, getToken } from '../../redux/user/userSelectors';
 import ContactForm from '../../components/ContactForm';
@@ -14,7 +13,7 @@ import { TIMEOUT_LONGER } from '../../const';
 
 class PhonebookPage extends Component {
   componentDidMount() {
-    const { token, isAuthorized, fetchContacts, fetchCurrentUser } = this.props;
+    const { token, fetchContacts, fetchCurrentUser } = this.props;
 
     if (token) {
       userActions.userToken.setToken(token);
@@ -46,7 +45,6 @@ class PhonebookPage extends Component {
 const mapStateToProps = state => ({
   contacts: getItems(state),
   filter: getFilter(state),
-  loading: getLoading(state),
   isAuthorized: getIsAuthorized(state),
   token: getToken(state),
 });

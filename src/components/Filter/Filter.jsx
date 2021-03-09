@@ -6,7 +6,7 @@ import { getFilter } from '../../redux/contacts/contacts-selectors';
 import withScaleAnimation from '../../renderProp/withScaleAnimation';
 import s from './Filter.module.scss';
 
-function Filter({ filter, onChange }) {
+function Filter({ filter = '', onChange }) {
   return (
     <div className={s.container}>
       <Input
@@ -32,10 +32,6 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(withScaleAnimation(Filter));
-
-Filter.defaultProps = {
-  filter: '',
-};
 
 Filter.propTypes = {
   filter: PropTypes.string,

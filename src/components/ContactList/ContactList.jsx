@@ -1,46 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
+import { Facebook } from 'react-spinners-css';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/contacts/contactsOperations';
-import { getFilteredItems } from '../../redux/contacts/contacts-selectors';
+import {
+  getFilteredItems,
+  getLoading,
+} from '../../redux/contacts/contacts-selectors';
 import ContactItem from './ContactItem';
 import s from './ContactList.module.scss';
 
-class ContactList extends Component {
-  static propTypes = {
-    contacts: PropTypes.array,
-    onDeleteContacts: PropTypes.func,
-  };
+function ContactList({ contacts, onDeleteContacts, loading }) {
+  const [isShow, setIsShow] = useState(false);
 
-  state = {
-    isShow: false,
-  };
+  useEffect(() => {
+    setIsShow(contacts[0]);
+  }, [contacts]);
 
-  componentDidMount() {
-    this.handleShow();
-  }
-
-  componentDidUpdate() {
-    this.handleShow();
-  }
-
-  handleShow = () => {
-    const { contacts } = this.props;
-    const { isShow } = this.state;
-
-    if (contacts[0] && !isShow) {
-      this.setState({ isShow: true });
-    }
-  };
-
-  render() {
-    const { contacts, onDeleteContacts } = this.props;
-    const { isShow } = this.state;
-
-    return (
-      <>
-        {isShow && (
+  return (
+    <>
+      {isShow && (
+        <>
+          {loading && (
+            <div className={s.loading}>
+              <Facebook size={50} />
+            </div>
+          )}
           <TransitionGroup component="ul" className={s.container}>
             {contacts.map(contact => (
               <ContactItem
@@ -50,14 +36,15 @@ class ContactList extends Component {
               />
             ))}
           </TransitionGroup>
-        )}
-      </>
-    );
-  }
+        </>
+      )}
+    </>
+  );
 }
 
 const mapStateToProps = state => ({
   contacts: getFilteredItems(state),
+  loading: getLoading(state),
 });
 
 const mapDispatchToProps = {
@@ -65,3 +52,8 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+
+ContactList.propTypes = {
+  contacts: PropTypes.array,
+  onDeleteContacts: PropTypes.func,
+};

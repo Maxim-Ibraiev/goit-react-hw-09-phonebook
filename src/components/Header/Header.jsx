@@ -19,14 +19,16 @@ function Header({ isAuthorized, location }) {
             <li>
               <Link
                 to={r.register}
-                className={location.pathname === '/register' && s.active}
+                className={
+                  location.pathname === r.register ? s.active : undefined
+                }
               >
                 Register
               </Link>
             </li>
             <li>
               <Link
-                className={location.pathname === '/login' && s.active}
+                className={location.pathname === r.login ? s.active : undefined}
                 to={r.login}
               >
                 Login
