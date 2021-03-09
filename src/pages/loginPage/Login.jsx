@@ -45,7 +45,7 @@ class Login extends Component {
           label={'Password'}
           value={password}
           onChange={this.handleChange}
-          type="current-password"
+          type="password"
         />
 
         <Button type="submit" text={'Войти'}></Button>
