@@ -1,25 +1,15 @@
-import { Component } from 'react';
-import { login } from '../../redux/user/userOperations';
 import { connect } from 'react-redux';
 import Input from '../../components/Input';
 import Button from '../../components/Buttons/ButtonSubmit';
 import s from './Login.module.scss';
+import { useFormInput } from '../../hooks/customHooks';
+import { login } from '../../redux/user/userOperations';
 
-class Login extends Component {
-  state = {
-    email: '',
-    password: '',
-  };
+function Login({ onLogin }) {
+  const email = useFormInput('');
+  const password = useFormInput('');
 
-  handleChange = e => {
-    const { name, value } = e.target;
-
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -27,36 +17,19 @@ class Login extends Component {
       email: formData.get('email'),
       password: formData.get('password'),
     };
-    this.props.onLogin(user);
+
+    onLogin(user);
   };
 
-  render() {
-    const { email, password } = this.state;
+  return (
+    <form onSubmit={handleSubmit} className={s.form}>
+      <Input label={'Email'} type="email" {...email} />
+      <Input label={'Password'} type="password" {...password} />
 
-    return (
-      <form onSubmit={this.handleSubmit} className={s.form}>
-        <Input
-          label={'Email'}
-          value={email}
-          onChange={this.handleChange}
-          type="email"
-        />
-        <Input
-          label={'Password'}
-          value={password}
-          onChange={this.handleChange}
-          type="password"
-        />
-
-        <Button type="submit" text={'Войти'}></Button>
-      </form>
-    );
-  }
+      <Button type="submit" text={'Войти'}></Button>
+    </form>
+  );
 }
-
-// const mapStateToProps = state => ({
-// });
-
 const mapDispatchToProps = {
   onLogin: login,
 };

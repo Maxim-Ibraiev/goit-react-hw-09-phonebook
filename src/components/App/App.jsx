@@ -3,7 +3,7 @@ import PhonebookPage from '../../pages/PhonebookPage';
 import Header from '../Header';
 import Login from '../../pages/loginPage';
 import Register from '../../pages/Register';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getToken } from '../../redux/user/userSelectors';
 import * as userActions from '../../redux/user/userOperations';
@@ -12,11 +12,9 @@ import r from '../routes';
 
 function App({ isAuthorized, fetchCurrentUser, token }) {
   useEffect(() => {
-    if (token) {
-      userActions.userToken.setToken(token);
+    if (token) userActions.userToken.setToken(token);
 
-      fetchCurrentUser();
-    }
+    if (token && !isAuthorized) fetchCurrentUser();
   });
 
   return (
@@ -24,14 +22,18 @@ function App({ isAuthorized, fetchCurrentUser, token }) {
       <Route path={r.home} component={Header} />
       {isAuthorized ? (
         <>
-          <Route path={r.contacts} component={PhonebookPage} />
-          <Redirect to={r.contacts} />
+          <Switch>
+            <Route path={r.contacts} component={PhonebookPage} />
+            <Redirect to={r.contacts} />
+          </Switch>
         </>
       ) : (
         <>
-          <Route path={r.register} component={Register} />
-          <Route path={r.login} component={Login} />
-          <Redirect to={r.login} />
+          <Switch>
+            <Route path={r.register} exact component={Register} />
+            <Route path={r.login} exact component={Login} />
+            <Redirect to={r.login} />
+          </Switch>
         </>
       )}
     </>

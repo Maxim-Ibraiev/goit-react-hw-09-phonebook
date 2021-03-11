@@ -2,12 +2,13 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuIdv4 } from 'uuid';
 import { connect } from 'react-redux';
-import { addItem } from '../../redux/contacts/contactsOperations';
-import { getItems } from '../../redux/contacts/contacts-selectors';
-import ButtonSubmit from '../../components/Buttons/ButtonSubmit';
 import Input from '../Input';
 import Notification from '../../components/Notification';
 import s from './ContactForm.module.scss';
+import { useFormInput } from '../../hooks/customHooks';
+import { addItem } from '../../redux/contacts/contactsOperations';
+import { getItems } from '../../redux/contacts/contacts-selectors';
+import ButtonSubmit from '../../components/Buttons/ButtonSubmit';
 
 const INITIAL_STATE = {
   name: '',
@@ -16,20 +17,20 @@ const INITIAL_STATE = {
 };
 
 function ContactForm({ contacts, onSetContacts }) {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const name = useFormInput('');
+  const number = useFormInput('');
   const [isShowNotification, setIsShowNotification] = useState(false);
 
   const reset = () => {
-    setName(INITIAL_STATE.name);
-    setNumber(INITIAL_STATE.number);
+    name.onChange(INITIAL_STATE.name);
+    number.onChange(INITIAL_STATE.number);
     setIsShowNotification(INITIAL_STATE.isShowNotification);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (!name || contacts.find(contact => contact.name === name)) {
+    if (!name.value || contacts.find(contact => contact.name === name.value)) {
       setIsShowNotification(true);
 
       return setTimeout(() => {
@@ -37,13 +38,13 @@ function ContactForm({ contacts, onSetContacts }) {
       }, 2000);
     }
 
-    onSetContacts({ id: uuIdv4(), name, number });
+    onSetContacts({ id: uuIdv4(), name: name.value, number: number.value });
     reset();
   };
 
   const notificationText =
-    name && number
-      ? `${name} is already in contacts.`
+    name.value && number.value
+      ? `${name.value} is already in contacts.`
       : 'Please enter the contact.';
 
   return (
@@ -54,16 +55,8 @@ function ContactForm({ contacts, onSetContacts }) {
         rightTransition={true}
       />
 
-      <Input
-        label={'Name'}
-        value={name}
-        onChange={({ target }) => setName(target.value)}
-      />
-      <Input
-        label={'Number'}
-        value={number}
-        onChange={({ target }) => setNumber(target.value)}
-      />
+      <Input label={'Name'} {...name} />
+      <Input label={'Number'} {...number} />
 
       <ButtonSubmit text={'Add contact'} />
     </form>
