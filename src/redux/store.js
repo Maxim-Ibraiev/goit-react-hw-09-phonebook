@@ -17,8 +17,6 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
 
-// const middleware = [...getDefaultMiddleware()];
-
 const userPersistConfig = {
   key: 'token',
   storage,
@@ -38,20 +36,3 @@ const store = configureStore({
 const persistor = persistStore(store);
 // eslint-disable-next-line import/no-anonymous-default-export
 export default { store, persistor };
-
-// import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-// import contactsReducer from './contacts/contactsReducer';
-
-// const store = configureStore({
-//   reducer: { contacts: persistReducer(contactsPersistConfig, contactsReducer) },
-//   middleware: getDefaultMiddleware({
-//     serializableCheck: {
-//       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-//     },
-//   }),
-// });
-
-// const persistor = persistStore(store);
-
-// // eslint-disable-next-line import/no-anonymous-default-export
-// export default { store, persistor };

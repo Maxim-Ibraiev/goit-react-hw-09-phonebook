@@ -1,16 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-  getIsAuthorized,
-  getToken,
-  getError,
-} from '../../redux/user/userSelectors';
+import { getToken, getError } from '../../redux/user/userSelectors';
 import r from '../routes';
 import UserMenu from '../UserMenu';
 import s from './Header.module.scss';
 
 export default function Header({ location }) {
-  const isAuthorized = useSelector(state => getIsAuthorized(state));
   const token = useSelector(state => getToken(state));
   const error = useSelector(state => getError(state));
 

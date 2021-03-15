@@ -5,7 +5,7 @@ function Input({
   name = label.toLowerCase(),
   value,
   onChange,
-  autoComplete = null,
+  autoComplete = 'on',
   type = 'text',
   ...props
 }) {
