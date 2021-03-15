@@ -15,3 +15,9 @@
     transition: box-shadow $animation $cubic;
   }
 }
+
+.loading {
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+}

@@ -1,14 +1,16 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Input from '../../components/Input';
 import Button from '../../components/Buttons/ButtonSubmit';
 import s from './Registe.module.scss';
 import { useFormInput } from '../../hooks/customHooks';
 import { singUp } from '../../redux/user/userOperations';
 
-function Register({ onSingUp }) {
+function Register() {
   const name = useFormInput('');
   const email = useFormInput('');
   const password = useFormInput('');
+  const dispatch = useDispatch();
+  const onSingUp = user => dispatch(singUp(user));
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -27,13 +29,9 @@ function Register({ onSingUp }) {
       <Input label={'Name'} {...name} />
       <Input label={'Email'} type={'email'} {...email} />
       <Input label={'Password'} type={'password'} {...password} />
-      <Button text={'Войти'}></Button>
+      <Button>Войти</Button>
     </form>
   );
 }
 
-const mapDispatchToProps = {
-  onSingUp: singUp,
-};
-
-export default connect(null, mapDispatchToProps)(Register);
+export default Register;

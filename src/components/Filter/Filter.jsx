@@ -1,12 +1,15 @@
-import PropTypes from 'prop-types';
 import Input from '../Input';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/contacts/contactsActions';
 import { getFilter } from '../../redux/contacts/contacts-selectors';
 import withScaleAnimation from '../../renderProp/withScaleAnimation';
 import s from './Filter.module.scss';
 
-function Filter({ filter = '', onChange }) {
+function Filter() {
+  const filter = useSelector(state => getFilter(state));
+  const dispatch = useDispatch();
+  const onChange = filter => dispatch(actions.filter(filter));
+
   return (
     <div className={s.container}>
       <Input
@@ -20,20 +23,4 @@ function Filter({ filter = '', onChange }) {
   );
 }
 
-const mapStateToProps = (state, props) => ({
-  filter: getFilter(state),
-});
-
-const mapDispatchToProps = {
-  onChange: actions.filter,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withScaleAnimation(Filter));
-
-Filter.propTypes = {
-  filter: PropTypes.string,
-  onChange: PropTypes.func,
-};
+export default withScaleAnimation(Filter);

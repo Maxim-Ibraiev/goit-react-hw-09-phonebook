@@ -1,9 +1,9 @@
 import s from './ButtonSubmit.module.scss';
 
-export default function ButtonSubmit({ text, props }) {
+export default function ButtonSubmit({ children, props }) {
   return (
     <button className={s.button} type="submit" {...props}>
-      {text}
+      {children}
     </button>
   );
 }

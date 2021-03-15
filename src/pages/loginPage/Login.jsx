@@ -1,13 +1,15 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Input from '../../components/Input';
 import Button from '../../components/Buttons/ButtonSubmit';
 import s from './Login.module.scss';
 import { useFormInput } from '../../hooks/customHooks';
 import { login } from '../../redux/user/userOperations';
 
-function Login({ onLogin }) {
+function Login() {
   const email = useFormInput('');
   const password = useFormInput('');
+  const dispatch = useDispatch();
+  const onLogin = user => dispatch(login(user));
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -26,12 +28,9 @@ function Login({ onLogin }) {
       <Input label={'Email'} type="email" {...email} />
       <Input label={'Password'} type="password" {...password} />
 
-      <Button type="submit" text={'Войти'}></Button>
+      <Button type="submit">Войти</Button>
     </form>
   );
 }
-const mapDispatchToProps = {
-  onLogin: login,
-};
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

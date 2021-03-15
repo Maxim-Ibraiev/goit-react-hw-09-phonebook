@@ -21,6 +21,8 @@ const token = createReducer('', {
   [loginSuccess]: (_, { payload }) => payload.token,
   [singUpSuccess]: (_, { payload }) => payload.token,
   [logoutSuccess]: () => '',
+
+  [currentUserError]: () => '',
 });
 
 const name = createReducer('', {
@@ -69,11 +71,11 @@ const loading = createReducer(false, {
 });
 
 const error = createReducer(null, {
-  [singUpError]: (_, { payload }) => payload,
-  [loginError]: (_, { payload }) => payload,
-  [logoutError]: (_, { payload }) => payload,
-  [isAuthorizedError]: (_, { payload }) => payload,
-  [currentUserError]: (_, { payload }) => payload,
+  [singUpError]: (state, { payload }) => payload,
+  [loginError]: (state, { payload }) => payload,
+  [logoutError]: (state, { payload }) => payload,
+  [isAuthorizedError]: (state, { payload }) => payload,
+  [currentUserError]: (state, { payload }) => payload,
 });
 
 export default combineReducers({

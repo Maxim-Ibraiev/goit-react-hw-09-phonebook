@@ -1,27 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { Facebook } from 'react-spinners-css';
+import ButtonDelete from '../Buttons/ButtonDelete';
 import { logout } from '../../redux/user/userOperations';
 import { getEmail } from '../../redux/user/userSelectors';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-function UserMenu({ email, onLogout }) {
+export default function UserMenu() {
+  const email = useSelector(state => getEmail(state));
+  const dispatch = useDispatch();
+  const onLogout = () => dispatch(logout());
+
   return (
-    <div>
-      <b style={{ marginRight: '20px' }}>{email}</b>
-      <button onClick={onLogout}>Выйти </button>
-    </div>
+    <>
+      {email ? (
+        <b style={{ marginRight: '20px' }}>{email}</b>
+      ) : (
+        <Facebook size={30} />
+      )}
+      <ButtonDelete onClick={onLogout}>Выйти</ButtonDelete>
+    </>
   );
 }
-
-UserMenu.prototype = {
-  mail: PropTypes.string,
-  onLogout: PropTypes.func,
-};
-
-const mapStateToProps = state => ({ email: getEmail(state) });
-
-const mapDispatchToProps = {
-  onLogout: logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);

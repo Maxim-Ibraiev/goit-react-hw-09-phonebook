@@ -28,10 +28,10 @@ export const singUp = user => dispatch => {
       dispatch(singUpSuccess(data));
       userToken.setToken(data.token);
     })
-    .catch(e => dispatch(singUpError(e.massage)));
+    .catch(e => dispatch(singUpError(e)));
 };
 
-export const logout = user => dispatch => {
+export const logout = () => dispatch => {
   dispatch(logoutRequest());
 
   axios
@@ -40,7 +40,7 @@ export const logout = user => dispatch => {
       dispatch(logoutSuccess());
       userToken.unsetToken();
     })
-    .catch(e => dispatch(logoutError(e.massage)));
+    .catch(e => dispatch(logoutError(e)));
 };
 
 export const login = user => dispatch => {
@@ -52,7 +52,7 @@ export const login = user => dispatch => {
       dispatch(loginSuccess(data));
       userToken.setToken(data.token);
     })
-    .catch(e => dispatch(loginError(e.massage)));
+    .catch(e => dispatch(loginError(e)));
 };
 export const currentUser = () => dispatch => {
   dispatch(currentUserRequest());
@@ -62,5 +62,5 @@ export const currentUser = () => dispatch => {
     .then(({ data }) => {
       dispatch(currentUserSuccess(data));
     })
-    .catch(e => dispatch(currentUserError(e.massage)));
+    .catch(e => dispatch(currentUserError(e)));
 };

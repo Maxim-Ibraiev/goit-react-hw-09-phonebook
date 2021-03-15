@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TransitionGroup } from 'react-transition-group';
-import PropTypes from 'prop-types';
 import { Facebook } from 'react-spinners-css';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/contacts/contactsOperations';
 import {
   getFilteredItems,
@@ -11,7 +10,11 @@ import {
 import ContactItem from './ContactItem';
 import s from './ContactList.module.scss';
 
-function ContactList({ contacts, onDeleteContacts, loading }) {
+export default function ContactList() {
+  const contacts = useSelector(state => getFilteredItems(state));
+  const loading = useSelector(state => getLoading(state));
+  const dispatch = useDispatch();
+  const onDeleteContacts = id => dispatch(actions.deleteItem(id));
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
@@ -20,13 +23,13 @@ function ContactList({ contacts, onDeleteContacts, loading }) {
 
   return (
     <>
+      {loading && (
+        <div className={s.loading}>
+          <Facebook size={50} />
+        </div>
+      )}
       {isShow && (
         <>
-          {loading && (
-            <div className={s.loading}>
-              <Facebook size={50} />
-            </div>
-          )}
           <TransitionGroup component="ul" className={s.container}>
             {contacts.map(contact => (
               <ContactItem
@@ -41,19 +44,3 @@ function ContactList({ contacts, onDeleteContacts, loading }) {
     </>
   );
 }
-
-const mapStateToProps = state => ({
-  contacts: getFilteredItems(state),
-  loading: getLoading(state),
-});
-
-const mapDispatchToProps = {
-  onDeleteContacts: actions.deleteItem,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
-
-ContactList.propTypes = {
-  contacts: PropTypes.array,
-  onDeleteContacts: PropTypes.func,
-};

@@ -1,52 +1,48 @@
 import { useEffect } from 'react';
+import Layout from '../Layout';
 import PhonebookPage from '../../pages/PhonebookPage';
 import Header from '../Header';
 import Login from '../../pages/loginPage';
 import Register from '../../pages/Register';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getToken } from '../../redux/user/userSelectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { getToken, getError } from '../../redux/user/userSelectors';
 import * as userActions from '../../redux/user/userOperations';
 import { getIsAuthorized } from '../../redux/user/userSelectors';
 import r from '../routes';
 
-function App({ isAuthorized, fetchCurrentUser, token }) {
+function App() {
+  const token = useSelector(state => getToken(state));
+  const error = useSelector(state => getError(state));
+  const isAuthorized = useSelector(state => getIsAuthorized(state));
+  const dispatch = useDispatch();
+  const fetchCurrentUser = () => dispatch(userActions.currentUser());
+
   useEffect(() => {
     if (token) userActions.userToken.setToken(token);
-
     if (token && !isAuthorized) fetchCurrentUser();
   });
 
   return (
-    <>
+    <Layout>
       <Route path={r.home} component={Header} />
-      {isAuthorized ? (
-        <>
-          <Switch>
-            <Route path={r.contacts} component={PhonebookPage} />
+      <Switch>
+        {token && !error && (
+          <>
+            <Route path={r.contacts} exact component={PhonebookPage} />
             <Redirect to={r.contacts} />
-          </Switch>
-        </>
-      ) : (
-        <>
-          <Switch>
+          </>
+        )}
+        {!isAuthorized && (
+          <>
             <Route path={r.register} exact component={Register} />
             <Route path={r.login} exact component={Login} />
             <Redirect to={r.login} />
-          </Switch>
-        </>
-      )}
-    </>
+          </>
+        )}
+      </Switch>
+    </Layout>
   );
 }
 
-const mapStateToProps = state => ({
-  isAuthorized: getIsAuthorized(state),
-  token: getToken(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchCurrentUser: () => dispatch(userActions.currentUser()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

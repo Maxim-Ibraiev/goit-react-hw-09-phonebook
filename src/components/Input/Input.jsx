@@ -7,7 +7,7 @@ function Input({
   onChange,
   autoComplete = null,
   type = 'text',
-  props,
+  ...props
 }) {
   return (
     <div className={s.container}>

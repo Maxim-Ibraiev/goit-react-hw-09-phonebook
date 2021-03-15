@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuIdv4 } from 'uuid';
-import { connect } from 'react-redux';
 import Input from '../Input';
 import Notification from '../../components/Notification';
+import ButtonSubmit from '../../components/Buttons/ButtonSubmit';
 import s from './ContactForm.module.scss';
 import { useFormInput } from '../../hooks/customHooks';
 import { addItem } from '../../redux/contacts/contactsOperations';
 import { getItems } from '../../redux/contacts/contacts-selectors';
-import ButtonSubmit from '../../components/Buttons/ButtonSubmit';
 
 const INITIAL_STATE = {
   name: '',
@@ -16,10 +15,13 @@ const INITIAL_STATE = {
   isShowNotification: false,
 };
 
-function ContactForm({ contacts, onSetContacts }) {
+export default function ContactForm() {
   const name = useFormInput('');
   const number = useFormInput('');
   const [isShowNotification, setIsShowNotification] = useState(false);
+  const contacts = useSelector(state => getItems(state));
+  const dispatch = useDispatch();
+  const onSetContacts = item => dispatch(addItem(item));
 
   const reset = () => {
     name.onChange(INITIAL_STATE.name);
@@ -58,21 +60,7 @@ function ContactForm({ contacts, onSetContacts }) {
       <Input label={'Name'} {...name} />
       <Input label={'Number'} {...number} />
 
-      <ButtonSubmit text={'Add contact'} />
+      <ButtonSubmit>Add contact</ButtonSubmit>
     </form>
   );
 }
-
-const mapStateToProps = state => ({
-  contacts: getItems(state),
-});
-
-const mapDispatchToProps = {
-  onSetContacts: addItem,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
-
-ContactForm.propTypes = {
-  onSetContacts: PropTypes.func,
-};

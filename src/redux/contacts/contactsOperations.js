@@ -11,7 +11,7 @@ import {
   itemsError,
 } from './contactsActions';
 
-export const items = () => dispatch => {
+export const getItems = () => dispatch => {
   dispatch(itemsRequest());
 
   axios('/contacts')
