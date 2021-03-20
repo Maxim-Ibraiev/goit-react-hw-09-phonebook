@@ -6,8 +6,8 @@ import UserMenu from '../UserMenu';
 import s from './Header.module.scss';
 
 export default function Header({ location }) {
-  const token = useSelector(state => getToken(state));
-  const error = useSelector(state => getError(state));
+  const token = useSelector(getToken);
+  const error = useSelector(getError);
 
   return (
     <nav className={s.container}>

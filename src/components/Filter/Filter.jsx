@@ -6,9 +6,8 @@ import withScaleAnimation from '../../renderProp/withScaleAnimation';
 import s from './Filter.module.scss';
 
 function Filter() {
-  const filter = useSelector(state => getFilter(state));
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
-  const onChange = filter => dispatch(actions.filter(filter));
 
   return (
     <div className={s.container}>
@@ -16,7 +15,7 @@ function Filter() {
         label={'Find contacts by name'}
         name={'filter'}
         value={filter}
-        onChange={({ target }) => onChange(target.value)}
+        onChange={({ target }) => dispatch(actions.filter(target.value))}
         autoComplete={'off'}
       ></Input>
     </div>

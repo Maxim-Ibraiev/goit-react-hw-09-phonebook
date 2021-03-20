@@ -8,10 +8,12 @@ import { login } from '../../redux/user/userOperations';
 function Login() {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-  const onLogin = user => dispatch(login(user));
 
   return (
-    <form onSubmit={handleSubmit(onLogin)} className={s.form}>
+    <form
+      onSubmit={handleSubmit(user => dispatch(login(user)))}
+      className={s.form}
+    >
       <Input label={'Email'} type="email" ref={register} />
       <Input label={'Password'} type="password" ref={register} />
 

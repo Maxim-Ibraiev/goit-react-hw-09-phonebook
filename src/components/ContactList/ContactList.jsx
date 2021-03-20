@@ -11,10 +11,9 @@ import ContactItem from './ContactItem';
 import s from './ContactList.module.scss';
 
 export default function ContactList() {
-  const contacts = useSelector(state => getFilteredItems(state));
-  const loading = useSelector(state => getLoading(state));
+  const contacts = useSelector(getFilteredItems);
+  const loading = useSelector(getLoading);
   const dispatch = useDispatch();
-  const onDeleteContacts = id => dispatch(actions.deleteItem(id));
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function ContactList() {
               <ContactItem
                 key={contact.id}
                 contact={contact}
-                onDeleteContacts={onDeleteContacts}
+                onDeleteContacts={id => dispatch(actions.deleteItem(id))}
               />
             ))}
           </TransitionGroup>

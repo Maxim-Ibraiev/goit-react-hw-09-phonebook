@@ -13,9 +13,9 @@ import { TIMEOUT_LONGER } from '../../const';
 import r from '../../components/routes';
 
 export default function PhonebookPage() {
-  const contacts = useSelector(state => getItems(state));
-  const token = useSelector(state => getToken(state));
-  const isAuthorized = useSelector(state => getIsAuthorized(state));
+  const contacts = useSelector(getItems);
+  const token = useSelector(getToken);
+  const isAuthorized = useSelector(getIsAuthorized);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -6,14 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import s from './UserMenu.module.scss';
 
 export default function UserMenu() {
-  const email = useSelector(state => getEmail(state));
+  const email = useSelector(getEmail);
   const dispatch = useDispatch();
-  const onLogout = () => dispatch(logout());
 
   return (
     <>
       {email ? <b className={s.email}>{email}</b> : <Facebook size={30} />}
-      <ButtonDelete onClick={onLogout}>Выйти</ButtonDelete>
+      <ButtonDelete onClick={() => dispatch(logout())}>Выйти</ButtonDelete>
     </>
   );
 }

@@ -12,15 +12,14 @@ import { getIsAuthorized } from '../../redux/user/userSelectors';
 import r from '../routes';
 
 function App() {
-  const token = useSelector(state => getToken(state));
-  const error = useSelector(state => getError(state));
-  const isAuthorized = useSelector(state => getIsAuthorized(state));
+  const token = useSelector(getToken);
+  const error = useSelector(getError);
+  const isAuthorized = useSelector(getIsAuthorized);
   const dispatch = useDispatch();
-  const fetchCurrentUser = () => dispatch(userActions.currentUser());
 
   useEffect(() => {
     if (token) userActions.userToken.setToken(token);
-    if (token && !isAuthorized) fetchCurrentUser();
+    if (token && !isAuthorized) dispatch(userActions.currentUser());
   });
 
   return (

@@ -15,9 +15,8 @@ export default function ContactForm() {
   const form = useRef();
   const [isShowNotification, setIsShowNotification] = useState(false);
 
-  const contacts = useSelector(state => getItems(state));
+  const contacts = useSelector(getItems);
   const dispatch = useDispatch();
-  const onSetContacts = item => dispatch(addItem(item));
 
   const onSubmit = ({ name, number }) => {
     if (
@@ -32,7 +31,7 @@ export default function ContactForm() {
       }, 2000);
     }
 
-    onSetContacts({ id: uuIdv4(), name, number });
+    dispatch(addItem({ id: uuIdv4(), name, number }));
     form.current.reset();
   };
 
